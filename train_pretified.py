@@ -88,7 +88,7 @@ def smart_fillna_for_tubercul(train, test):
     fill_vals_dict = {}
 
     for i in range(len(fill_vals)):
-        fill_vals_dict[fill_vals[0][i]] = np.nanmean(fill_vals[1][i]) #np.nanmean(fill_vals[1][i][tuberculs]) for pandas==1.3
+        fill_vals_dict[fill_vals[0][i]] = np.nanmean(fill_vals[1][i][tuberculs]) #np.nanmean(fill_vals[1][i][tuberculs]) for pandas==1.3
 
     for i in tmp.index:
         tmp.loc[i,tuberculs] = tmp.loc[i,tuberculs].fillna(fill_vals_dict[tmp.loc[i,'name']])
@@ -134,14 +134,6 @@ def scaling(train, test):
 
     return train, test
 
-
-def add_absent_onehot_cols(df):
-    for s in subjects:
-        if s not in df.columns:
-            df[f'subject_{s}'] = 0
-
-    return df
-
 train = prepare_and_clean_data(train)
 test = prepare_and_clean_data(test)
 
@@ -156,13 +148,12 @@ test = making_features(test)
 
 train, test = scaling(train, test)
 
-train = pd.get_dummies(train)
-test = pd.get_dummies(test)
+tmp = pd.concat([train, test])
+tmp = pd.get_dummies(tmp)
 
-train = add_absent_onehot_cols(train)
-test = add_absent_onehot_cols(test)
+train, test = tmp[:len(train)], tmp[len(train):]
 
-X_train, X_val, y_train, y_val = train_test_split(train, y, test_size=0.2, random_state=42, shuffle=False)
+}X_train, X_val, y_train, y_val = train_test_split(train, y, test_size=0.2, random_state=42, shuffle=False)
 
 #модель для экспериментов
 cb_for_valid = CatBoostRegressor(iterations=13000, eval_metric='MAE', random_seed=42, random_strength=0.6, learning_rate=0.007)
