@@ -153,7 +153,7 @@ tmp = pd.get_dummies(tmp)
 
 train, test = tmp[:len(train)], tmp[len(train):]
 
-}X_train, X_val, y_train, y_val = train_test_split(train, y, test_size=0.2, random_state=42, shuffle=False)
+X_train, X_val, y_train, y_val = train_test_split(train, y, test_size=0.2, random_state=42, shuffle=False)
 
 #модель для экспериментов
 cb_for_valid = CatBoostRegressor(iterations=13000, eval_metric='MAE', random_seed=42, random_strength=0.6, learning_rate=0.007)
