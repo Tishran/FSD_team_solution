@@ -88,7 +88,7 @@ def smart_fillna_for_tubercul(train, test):
     fill_vals_dict = {}
 
     for i in range(len(fill_vals)):
-        fill_vals_dict[fill_vals[0][i]] = np.nanmean(fill_vals[1][i][tuberculs]) #np.nanmean(fill_vals[1][i][tuberculs]) for pandas==1.3
+        fill_vals_dict[fill_vals[0][i]] = np.nanmean(fill_vals[1][i]) #np.nanmean(fill_vals[1][i][tuberculs]) for pandas==1.3
 
     for i in tmp.index:
         tmp.loc[i,tuberculs] = tmp.loc[i,tuberculs].fillna(fill_vals_dict[tmp.loc[i,'name']])
