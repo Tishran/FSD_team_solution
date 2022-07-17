@@ -174,3 +174,5 @@ sub = pd.DataFrame({'Unnamed: 0': test.index, 'inf_rate': test_preds})
 print(sub[:5])
 
 sub.to_csv('FSD.csv', index=False)
+final_cb.save_model('final_model')
+
